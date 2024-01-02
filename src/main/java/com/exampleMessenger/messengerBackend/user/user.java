@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,19 +28,20 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode
 public class user implements UserDetails{
-	public user() {}
 	public user(
 			String firstName, 
 			String lastName, 
 			String userName, 
 			String email, 
-			String password 
+			String password,
+			userRights UserRights
 			) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
 		this.email = email;
 		this.password = password;
+		this.UserRights = UserRights;
 	}
 
 	@Id
@@ -59,11 +61,10 @@ public class user implements UserDetails{
 	private String userName;
 	private String email;
 	private String password;
+	@Enumerated(EnumType.STRING)
+	private userRights UserRights;
 	private boolean locked = false;
-	private boolean expired = false;
-	private boolean enabled = true;
-	@Enumerated
-	private userRights UserRights = userRights.USER;
+	private boolean enabled = false;
 	public long getUserId() {
 		return userId;
 	}
@@ -86,7 +87,7 @@ public class user implements UserDetails{
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return expired;
+		return true;
 	}
 
 	@Override

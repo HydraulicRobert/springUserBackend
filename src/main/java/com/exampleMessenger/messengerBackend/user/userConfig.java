@@ -14,8 +14,8 @@ public class userConfig {
 	CommandLineRunner commandLineRunner(userRepository UserRepository)
 	{
 		return args->{
-			user hans = new user("hans","joachim","hansi","hans@im.glueck","hans");
-			user max = new user("max","mustermann","maxi","max@im.glueck","max");
+			user hans = new user("hans","joachim","hansi","hans@im.glueck","hans", userRights.USER);
+			user max = new user("max","mustermann","maxi","max@im.glueck","max", userRights.USER);
 			UserRepository.saveAll(
 					Arrays.asList(
 							hans,max
